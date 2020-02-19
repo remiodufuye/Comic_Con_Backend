@@ -11,7 +11,7 @@ require 'rest-client'
 
 
 Movie.destroy_all
-User.destroy_all
+# User.destroy_all
 Favorite.destroy_all
 
 movies = RestClient.get('https://comicvine.gamespot.com/api/movies/?api_key=1bc3aaafa2e58de60dce5a3f1b73c8f995e8b254&format=json&limit=200')

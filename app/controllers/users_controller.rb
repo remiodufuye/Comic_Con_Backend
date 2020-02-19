@@ -17,9 +17,15 @@ class UsersController < ApplicationController
     def serialize_data
         {:except => [:created_at,:updated_at],
             :include => {
-                :movies => 
+                :favorites => 
                 {
-                    :except => [:created_at, :updated_at]
+                    :except => [:created_at, :updated_at],
+                        :include => {
+                            :movie => 
+                            {
+                                :except => [:created_at, :updated_at]
+                            }
+                        }
                 }
             }}
     end 

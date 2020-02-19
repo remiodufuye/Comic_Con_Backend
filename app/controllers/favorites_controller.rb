@@ -9,11 +9,12 @@ class FavoritesController < ApplicationController
     def create 
         favorite = Favorite.create(strong_params)
         if favorite.valid? 
-        #  render json: favorite.to_json(serialized_data)
-        render json: {message: "Movie added to favorites!", favorite: favorite.to_json(serialized_data)}
-         else 
-        render json: { message: "Movie already added to favorites"}
-         end
+            #  render json: favorite.to_json(serialized_data)
+            render json: {message: "Movie added to favorites!", favorite: favorite.to_json(serialized_data)}
+        else 
+            render json: { message: "Movie already added to favorites"}
+        end
+        # byebug
     end 
 
     def show
@@ -24,7 +25,6 @@ class FavoritesController < ApplicationController
     def destroy
         favorite = Favorite.find(params[:id])
         favorite.delete
-        byebug
         render json: {message: "Movie removed from favorites"}
     end
   
@@ -35,7 +35,17 @@ class FavoritesController < ApplicationController
     end 
 
     def serialized_data
-        {:except => [:created_at,:updated_at]}
+        {:except => [:created_at,:updated_at],
+            :include => {
+                :movie => 
+                {
+                    :except => [:created_at, :updated_at]
+                },
+                :user => 
+                {
+                    :except => [:created_at, :updated_at]
+                }
+            }}
     end 
 
 end
